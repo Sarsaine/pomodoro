@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {Observable} from "rxjs";
+import { Observable } from "rxjs";
 import { States } from "./enum/states";
 import { TimeService } from "./services/time.service";
 import { Config } from "./models/config";
@@ -20,7 +20,7 @@ export class HomePage {
   openConfiguration = false;
 
   constructor(
-    private time: TimeService
+    private time: TimeService,
   ) {
     this.current$ = this.time.getCurrent();
     this.config$ = this.time.getConfig();

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { TimeService } from "../../services/time.service";
 import { Observable } from "rxjs";
+import { TimeService } from "../../services/time.service";
 import { Config } from "../../models/config";
 
 @Component({
