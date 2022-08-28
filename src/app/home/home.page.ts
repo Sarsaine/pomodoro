@@ -17,6 +17,8 @@ export class HomePage {
   current$: Observable<Current>;
   config$: Observable<Config>;
 
+  openConfiguration = false;
+
   constructor(
     private time: TimeService
   ) {
@@ -42,6 +44,10 @@ export class HomePage {
 
   async reset() {
     await this.time.reset();
+  }
+
+  toggleConfiguration() {
+    this.openConfiguration = !this.openConfiguration
   }
 
 }

@@ -17,37 +17,46 @@
     <ng-container *ngIf="config$ | async as config">
       <div id="container">
         <ion-list>
-          <ion-list-header>
+          <ion-list-header (click)="toggleConfiguration()">
             <ion-label>
-              <strong>Iteration {{ current.iteration }} / {{ config.maxIteration }}</strong>
+              <strong>
+                <ion-icon name="chevron-forward-outline" [ngClass]="{'open': !openConfiguration, 'smooth-collapse': true}"></ion-icon>
+                Iteration {{ current.iteration }} / {{ config.maxIteration }}
+              </strong>
             </ion-label>
           </ion-list-header>
-          <app-remain [current]="current" [config]="config"></app-remain>
-          <app-progress [title]="current.state.toString()" [value]="current.time" [buffer]="current.iteration >= config.maxIteration ? config.workTime : config.breakTime"
-                        [max]="current.iteration >= config.maxIteration ? config.workTime * 2 : config.workTime + config.breakTime"></app-progress>
-          <ion-button *ngIf="current.state === States.WAIT" (click)="start()">
-            Start
-          </ion-button>
-          <ion-button *ngIf="current.state === States.WORK" (click)="break()">
-            Break
-          </ion-button>
-          <ion-button *ngIf="current.state === States.BREAK" (click)="finish()">
-            Finish
-          </ion-button>
-          <ion-button *ngIf="current.state !== States.WAIT" (click)="stop()">
-            Stop
-          </ion-button>
-          <ion-button *ngIf="current.state === States.WAIT" (click)="reset()">
-            Reset
-          </ion-button>
+          <div [ngStyle]="{'height': !openConfiguration ? '9rem' : '0'}" class="smooth-collapse">
+            <app-remain [current]="current" [config]="config"></app-remain>
+            <app-progress [title]="current.state.toString()" [value]="current.time"
+                          [buffer]="current.iteration >= config.maxIteration ? config.workTime : config.breakTime"
+                          [max]="current.iteration >= config.maxIteration ? config.workTime * 2 : config.workTime + config.breakTime"></app-progress>
+            <ion-button *ngIf="current.state === States.WAIT" (click)="start()">
+              Start
+            </ion-button>
+            <ion-button *ngIf="current.state === States.WORK" (click)="break()">
+              Break
+            </ion-button>
+            <ion-button *ngIf="current.state === States.BREAK" (click)="finish()">
+              Finish
+            </ion-button>
+            <ion-button *ngIf="current.state !== States.WAIT" (click)="stop()">
+              Stop
+            </ion-button>
+            <ion-button *ngIf="current.state === States.WAIT" (click)="reset()">
+              Reset
+            </ion-button>
+          </div>
         </ion-list>
         <ion-list>
-          <ion-list-header>
+          <ion-list-header (click)="toggleConfiguration()">
             <ion-label>
-              <strong>Configuration</strong>
+              <strong>
+                <ion-icon name="chevron-forward-outline" [ngClass]="{'open': openConfiguration, 'smooth-collapse': true}"></ion-icon>
+                Configuration
+              </strong>
             </ion-label>
           </ion-list-header>
-          <app-form [disabled]="current.state !== States.WAIT"></app-form>
+          <app-form [disabled]="current.state !== States.WAIT" [open]="openConfiguration"></app-form>
         </ion-list>
       </div>
     </ng-container>

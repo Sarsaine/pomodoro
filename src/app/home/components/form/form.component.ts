@@ -11,6 +11,7 @@ import { Config } from "../../models/config";
 export class FormComponent {
 
   @Input() disabled = false;
+  @Input() open = true;
 
   config$: Observable<Config>;
 

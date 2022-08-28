@@ -25,3 +25,11 @@
 #container a {
   text-decoration: none;
 }
+
+.smooth-collapse {
+  transition: all 0.5s ease-in-out;
+}
+
+.open {
+  transform: rotate(90deg);
+}

@@ -1,4 +1,4 @@
-<ng-container *ngIf="config$ | async as config">
+<div *ngIf="config$ | async as config" [ngStyle]="{'height': open ? '24rem' : '0'}" class="smooth-collapse">
   <ion-item [disabled]="disabled">
     <ion-label>Work time</ion-label>
     <ion-input type="number" [ngModel]="config.workTime" (ngModelChange)="change('workTime', $event)"></ion-input>
@@ -36,4 +36,4 @@
     <ion-label>Long Time Format</ion-label>
     <ion-checkbox [ngModel]="config.longTimeFormat" (ngModelChange)="change('longTimeFormat', $event)"></ion-checkbox>
   </ion-item>
-</ng-container>
+</div>
