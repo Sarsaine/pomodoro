@@ -1,0 +1,8 @@
+<ion-list>
+  <ion-list-header>
+    <ion-label>
+      <strong>{{ title }}</strong>
+    </ion-label>
+  </ion-list-header>
+  <ion-progress-bar [value]="value / max" [buffer]="(max - buffer) / max"></ion-progress-bar>
+</ion-list>
