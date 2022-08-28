@@ -6,6 +6,7 @@ import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
 import {ProgressComponent} from "./components/progress/progress.component";
+import {FormComponent} from "./components/form/form.component";
 
 
 @NgModule({
@@ -15,6 +16,6 @@ import {ProgressComponent} from "./components/progress/progress.component";
     IonicModule,
     HomePageRoutingModule
   ],
-    declarations: [HomePage, ProgressComponent]
+  declarations: [HomePage, ProgressComponent, FormComponent]
 })
 export class HomePageModule {}

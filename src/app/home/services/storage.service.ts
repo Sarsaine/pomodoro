@@ -56,7 +56,6 @@ export class StorageService {
       workTime: 20,
       pauseTime: 5,
       maxIteration: 4,
-      pauseMaxIteration: 20,
     }
   }
 

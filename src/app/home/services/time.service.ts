@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
-import {from, interval, Observable, of} from "rxjs";
-import {switchMap, tap} from "rxjs/operators";
-import {StorageService} from "./storage.service";
-import {States} from "../enum/states";
-import {Current} from "../models/current";
-import {Config} from "../models/config";
-import {SoundService} from "./sound.service";
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, interval, Observable, of } from "rxjs";
+import { switchMap, tap } from "rxjs/operators";
+import { StorageService } from "./storage.service";
+import { States } from "../enum/states";
+import { Current } from "../models/current";
+import { Config } from "../models/config";
+import { SoundService } from "./sound.service";
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +14,8 @@ export class TimeService {
 
   private current: Current = null;
   private config: Config = null;
+
+  private config$ = new BehaviorSubject<Config>(null);
 
   constructor(
     private storage: StorageService,
@@ -28,10 +30,11 @@ export class TimeService {
 
   private async init() {
     this.storage.loadCurrent().then(current => {
-      this.current = current
+      this.current = current;
     });
     this.storage.loadConfig().then(config => {
-      this.config = config
+      this.config = config;
+      this.config$.next(config);
     });
   }
 
@@ -68,7 +71,15 @@ export class TimeService {
   }
 
   getConfig(): Observable<Config> {
-    return from(this.storage.loadConfig());
+    return this.config$;
+  }
+
+  async setConfig(
+    key: 'workTime' | 'pauseTime' | 'maxIteration',
+    value: any): Promise<void> {
+    this.config[key] = value;
+    await this.storage.saveConfig(this.config);
+    this.config$.next(this.config);
   }
 
   async changeState(newState: States) {

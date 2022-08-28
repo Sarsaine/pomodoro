@@ -1,0 +1,35 @@
+<ng-container *ngIf="config$ | async as config">
+  <ion-item [disabled]="disabled">
+    <ion-label>Work time</ion-label>
+    <ion-input type="number" [ngModel]="config.workTime" (ngModelChange)="change('workTime', $event)"></ion-input>
+  </ion-item>
+  <ion-item [disabled]="disabled">
+    <ion-range
+      [ngModel]="config.workTime" (ngModelChange)="change('workTime', $event)"
+      [min]="5"
+      [max]="60"
+    ></ion-range>
+  </ion-item>
+  <ion-item [disabled]="disabled">
+    <ion-label>Pause time</ion-label>
+    <ion-input type="number" [ngModel]="config.pauseTime" (ngModelChange)="change('pauseTime', $event)"></ion-input>
+  </ion-item>
+  <ion-item [disabled]="disabled">
+    <ion-range
+      [ngModel]="config.pauseTime" (ngModelChange)="change('pauseTime', $event)"
+      [min]="5"
+      [max]="20"
+    ></ion-range>
+  </ion-item>
+  <ion-item [disabled]="disabled">
+    <ion-label>Max Iteration</ion-label>
+    <ion-input type="number" [ngModel]="config.maxIteration" (ngModelChange)="change('maxIteration', $event)"></ion-input>
+  </ion-item>
+  <ion-item [disabled]="disabled">
+    <ion-range
+      [ngModel]="config.maxIteration" (ngModelChange)="change('maxIteration', $event)"
+      [min]="1"
+      [max]="10"
+    ></ion-range>
+  </ion-item>
+</ng-container>

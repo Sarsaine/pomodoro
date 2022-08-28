@@ -16,6 +16,7 @@
   <ng-container *ngIf="current$ | async as current">
     <ng-container *ngIf="config$ | async as config">
       <div id="container">
+        <app-form [disabled]="current.state !== States.WAIT"></app-form>
         <app-progress [title]="current.state.toString()" [value]="current.time" [buffer]="config.pauseTime" [max]="config.workTime + config.pauseTime"></app-progress>
         <ion-button *ngIf="current.state !== States.WORK" [disabled]="current.time < config.workTime && current.state !== States.WAIT" (click)="start()">
           Start
