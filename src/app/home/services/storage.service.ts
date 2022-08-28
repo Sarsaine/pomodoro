@@ -3,8 +3,7 @@ import { Storage } from "@ionic/storage-angular";
 import { Config } from "../models/config";
 import { Current } from "../models/current";
 import { States } from "../enum/states";
-import { Subject} from "rxjs";
-import { take } from "rxjs/operators";
+import { wait } from "../utils/wait";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +13,6 @@ export class StorageService {
   private storage: Storage | null = null;
 
   private initialized = false
-  private initialized$ = new Subject<boolean>()
 
   constructor(
     private _storage: Storage,
@@ -25,14 +23,11 @@ export class StorageService {
   async init() {
     this.storage = await this._storage.create();
     this.initialized = true;
-    this.initialized$.next(true);
   }
 
   async waitInit(): Promise<void> {
-    if (!this.initialized) {
-      await this.initialized$.pipe(
-        take(1)
-      ).toPromise()
+    while (!this.initialized) {
+      await wait(10);
     }
   }
 
