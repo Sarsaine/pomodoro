@@ -32,7 +32,11 @@ export class HomePage {
     await this.time.changeState(States.WAIT);
   }
 
-  async stop() {
+  async finish() {
+    await this.time.finish();
+  }
+
+  async reset() {
     await this.time.reset();
   }
 

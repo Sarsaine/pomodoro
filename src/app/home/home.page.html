@@ -16,21 +16,37 @@
   <ng-container *ngIf="current$ | async as current">
     <ng-container *ngIf="config$ | async as config">
       <div id="container">
-        <app-form [disabled]="current.state !== States.WAIT"></app-form>
-        <app-progress [title]="current.state.toString()" [value]="current.time" [buffer]="config.pauseTime" [max]="config.workTime + config.pauseTime"></app-progress>
-        <ion-button *ngIf="current.state !== States.WORK" [disabled]="current.time < config.workTime && current.state !== States.WAIT" (click)="start()">
-          Start
-        </ion-button>
-        <ion-button *ngIf="current.state == States.WORK" (click)="pause()">
-          Pause
-        </ion-button>
-        <ion-button *ngIf="current.state !== States.WAIT" (click)="stop()">
-          Stop
-        </ion-button>
-        <ion-button *ngIf="current.state === States.WAIT" (click)="stop()">
-          Reset
-        </ion-button>
+        <ion-list>
+          <ion-list-header>
+            <ion-label>
+              <strong>Configuration</strong>
+            </ion-label>
+          </ion-list-header>
+          <app-form [disabled]="current.state !== States.WAIT"></app-form>
+        </ion-list>
+        <ion-list>
+          <ion-list-header>
+            <ion-label>
+              <strong>Iteration {{ current.iteration }} / {{ config.maxIteration }}</strong>
+            </ion-label>
+          </ion-list-header>
+          <app-progress [title]="current.state.toString()" [value]="current.time" [buffer]="current.iteration >= config.maxIteration ? config.workTime : config.pauseTime"
+                        [max]="current.iteration >= config.maxIteration ? config.workTime * 2 : config.workTime + config.pauseTime"></app-progress>
+          <ion-button *ngIf="current.state !== States.WORK"
+                      [disabled]="current.time < config.workTime && current.state !== States.WAIT" (click)="start()">
+            Start
+          </ion-button>
+          <ion-button *ngIf="current.state == States.WORK" (click)="pause()">
+            Pause
+          </ion-button>
+          <ion-button *ngIf="current.state !== States.WAIT" (click)="finish()">
+            Finish
+          </ion-button>
+          <ion-button *ngIf="current.state === States.WAIT" (click)="reset()">
+            Reset
+          </ion-button>
+        </ion-list>
       </div>
-      </ng-container>
+    </ng-container>
   </ng-container>
 </ion-content>

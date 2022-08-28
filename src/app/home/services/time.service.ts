@@ -45,24 +45,26 @@ export class TimeService {
     this.current.time++;
     if (this.current.state === States.WORK && this.current.time >= this.config.workTime) {
       this.current.state = States.PAUSE;
-      this.saveCurrent();
       this.sound.pauseAlarm();
-    } else if (this.current.state === States.PAUSE && this.current.time >= this.config.workTime + this.config.pauseTime) {
-      this.current.time = 0;
-      this.current.state = States.WAIT;
-      this.current.iteration++;
-      this.saveCurrent();
-      this.sound.workAlarm();
+    } else if (this.current.state === States.PAUSE) {
+      const pauseTime = this.current.iteration >= this.config.maxIteration ? this.config.workTime * 2 : this.config.workTime + this.config.pauseTime;
+      if (this.current.time >= pauseTime) {
+        this.current.time = 0;
+        this.current.state = States.WAIT;
+        this.current.iteration++;
+        if (this.current.iteration > this.config.maxIteration) {
+          this.current.iteration = 1;
+        }
+        this.sound.workAlarm();
+      }
     }
+    this.saveCurrent()
   }
 
   getCurrent(): Observable<Current> {
     return interval(1000).pipe(
-      tap(async time => {
+      tap(async _ => {
         this.incTime()
-        if (!(time % 10)) {
-          await this.saveCurrent()
-        }
       }),
       switchMap(_ => {
         return of(this.current)
@@ -88,10 +90,20 @@ export class TimeService {
     await this.saveCurrent();
   }
 
+  async finish() {
+    this.current.time = 0;
+    this.current.state = States.WAIT;
+    this.current.iteration++;
+    if (this.current.iteration > this.config.maxIteration) {
+      this.current.iteration = 1;
+    }
+    await this.saveCurrent();
+  }
+
   async reset() {
     this.current.time = 0;
     this.current.state = States.WAIT;
-    this.current.iteration = 0;
+    this.current.iteration = 1;
     await this.saveCurrent();
   }
 }
