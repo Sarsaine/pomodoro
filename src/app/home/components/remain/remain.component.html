@@ -3,6 +3,7 @@
     <strong>Remaining work time : {{ config.workTime - current.time | formatTime: (config.longTimeFormat ? 'long' : 'short') }}</strong>
   </ion-label>
   <ion-label *ngIf="current.time >= config.workTime">
-    <strong>Remaining break time : {{ config.workTime + config.breakTime - current.time | formatTime: (config.longTimeFormat ? 'long' : 'short') }}</strong>
+    <strong *ngIf="current.iteration < config.maxIteration">Remaining break time : {{ config.workTime + config.breakTime - current.time | formatTime: (config.longTimeFormat ? 'long' : 'short') }}</strong>
+    <strong *ngIf="current.iteration >= config.maxIteration">Remaining break time : {{ config.workTime * 2 - current.time | formatTime: (config.longTimeFormat ? 'long' : 'short') }}</strong>
   </ion-label>
 </ion-list-header>
