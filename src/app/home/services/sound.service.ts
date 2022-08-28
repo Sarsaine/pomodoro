@@ -11,7 +11,7 @@ export class SoundService {
 
   }
 
-  pauseAlarm() {
+  breakAlarm() {
     this.stopAlarm();
 
   }

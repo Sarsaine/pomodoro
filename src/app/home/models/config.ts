@@ -1,5 +1,6 @@
 export interface Config {
   workTime: number
-  pauseTime: number
+  breakTime: number
   maxIteration: number
+  longTimeFormat: number
 }

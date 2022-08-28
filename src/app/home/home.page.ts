@@ -25,14 +25,18 @@ export class HomePage {
   }
 
   async start() {
-    await this.time.changeState(States.WORK);
+    await this.time.start();
   }
 
-  async pause() {
-    await this.time.changeState(States.WAIT);
+  async break() {
+    await this.time.break();
   }
 
   async finish() {
+    await this.time.finish();
+  }
+
+  async stop() {
     await this.time.finish();
   }
 

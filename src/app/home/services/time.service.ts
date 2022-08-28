@@ -44,11 +44,11 @@ export class TimeService {
 
     this.current.time++;
     if (this.current.state === States.WORK && this.current.time >= this.config.workTime) {
-      this.current.state = States.PAUSE;
-      this.sound.pauseAlarm();
-    } else if (this.current.state === States.PAUSE) {
-      const pauseTime = this.current.iteration >= this.config.maxIteration ? this.config.workTime * 2 : this.config.workTime + this.config.pauseTime;
-      if (this.current.time >= pauseTime) {
+      this.current.state = States.BREAK;
+      this.sound.breakAlarm();
+    } else if (this.current.state === States.BREAK) {
+      const breakTime = this.current.iteration >= this.config.maxIteration ? this.config.workTime * 2 : this.config.workTime + this.config.breakTime;
+      if (this.current.time >= breakTime) {
         this.current.time = 0;
         this.current.state = States.WAIT;
         this.current.iteration++;
@@ -58,7 +58,7 @@ export class TimeService {
         this.sound.workAlarm();
       }
     }
-    this.saveCurrent()
+    this.saveCurrent();
   }
 
   getCurrent(): Observable<Current> {
@@ -77,33 +77,41 @@ export class TimeService {
   }
 
   async setConfig(
-    key: 'workTime' | 'pauseTime' | 'maxIteration',
-    value: any): Promise<void> {
+    key: 'workTime' | 'breakTime' | 'maxIteration' | 'longTimeFormat',
+    value: number): Promise<void> {
     this.config[key] = value;
     await this.storage.saveConfig(this.config);
     this.config$.next(this.config);
   }
 
-  async changeState(newState: States) {
+  private async changeState(newState: States) {
     this.sound.stopAlarm();
     this.current.state = newState;
     await this.saveCurrent();
   }
 
+  async start() {
+    await this.changeState(States.WORK);
+  }
+
+  async break() {
+    this.current.time = this.config.workTime;
+    await this.changeState(States.BREAK);
+    await this.saveCurrent();
+  }
+
   async finish() {
     this.current.time = 0;
-    this.current.state = States.WAIT;
     this.current.iteration++;
     if (this.current.iteration > this.config.maxIteration) {
       this.current.iteration = 1;
     }
-    await this.saveCurrent();
+    await this.changeState(States.WAIT);
   }
 
   async reset() {
     this.current.time = 0;
-    this.current.state = States.WAIT;
     this.current.iteration = 1;
-    await this.saveCurrent();
+    await this.changeState(States.WAIT);
   }
 }

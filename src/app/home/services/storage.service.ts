@@ -54,8 +54,9 @@ export class StorageService {
     }
     return {
       workTime: 20,
-      pauseTime: 5,
+      breakTime: 5,
       maxIteration: 4,
+      longTimeFormat: 0,
     }
   }
 
@@ -72,7 +73,7 @@ export class StorageService {
     return {
       time: 0,
       state: States.WAIT,
-      iteration: 0,
+      iteration: 1,
     }
   }
 

@@ -1,0 +1,8 @@
+<ion-list-header>
+  <ion-label *ngIf="current.time < config.workTime">
+    <strong>Remaining work time : {{ config.workTime - current.time | formatTime: (config.longTimeFormat ? 'long' : 'short') }}</strong>
+  </ion-label>
+  <ion-label *ngIf="current.time >= config.workTime">
+    <strong>Remaining break time : {{ config.workTime + config.breakTime - current.time | formatTime: (config.longTimeFormat ? 'long' : 'short') }}</strong>
+  </ion-label>
+</ion-list-header>

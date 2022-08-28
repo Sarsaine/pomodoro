@@ -21,7 +21,7 @@ export class FormComponent {
   }
 
   change(
-    key: 'workTime' | 'pauseTime' | 'maxIteration',
+    key: 'workTime' | 'breakTime' | 'maxIteration' | 'longTimeFormat',
     value: any) {
     this.time.setConfig(key, value)
   }

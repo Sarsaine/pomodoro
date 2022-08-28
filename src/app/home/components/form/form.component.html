@@ -11,12 +11,12 @@
     ></ion-range>
   </ion-item>
   <ion-item [disabled]="disabled">
-    <ion-label>Pause time</ion-label>
-    <ion-input type="number" [ngModel]="config.pauseTime" (ngModelChange)="change('pauseTime', $event)"></ion-input>
+    <ion-label>Break time</ion-label>
+    <ion-input type="number" [ngModel]="config.breakTime" (ngModelChange)="change('breakTime', $event)"></ion-input>
   </ion-item>
   <ion-item [disabled]="disabled">
     <ion-range
-      [ngModel]="config.pauseTime" (ngModelChange)="change('pauseTime', $event)"
+      [ngModel]="config.breakTime" (ngModelChange)="change('breakTime', $event)"
       [min]="5"
       [max]="20"
     ></ion-range>
@@ -31,5 +31,9 @@
       [min]="1"
       [max]="10"
     ></ion-range>
+  </ion-item>
+  <ion-item [disabled]="disabled">
+    <ion-label>Long Time Format</ion-label>
+    <ion-checkbox [ngModel]="config.longTimeFormat" (ngModelChange)="change('longTimeFormat', $event)"></ion-checkbox>
   </ion-item>
 </ng-container>
