@@ -1,22 +1,22 @@
 <div *ngIf="config$ | async as config" [ngStyle]="{'height': open ? '24rem' : '0'}" class="smooth-collapse">
   <ion-item [disabled]="disabled">
     <ion-label>Work time</ion-label>
-    <ion-input type="number" [ngModel]="config.workTime" (ngModelChange)="change('workTime', $event)"></ion-input>
+    <ion-input type="number" [ngModel]="config.workTime / 60" (ngModelChange)="change('workTime', $event * 60)"></ion-input>
   </ion-item>
   <ion-item [disabled]="disabled">
     <ion-range
-      [ngModel]="config.workTime" (ngModelChange)="change('workTime', $event)"
+      [ngModel]="config.workTime / 60" (ngModelChange)="change('workTime', $event * 60)"
       [min]="5"
       [max]="60"
     ></ion-range>
   </ion-item>
   <ion-item [disabled]="disabled">
     <ion-label>Break time</ion-label>
-    <ion-input type="number" [ngModel]="config.breakTime" (ngModelChange)="change('breakTime', $event)"></ion-input>
+    <ion-input type="number" [ngModel]="config.breakTime / 60" (ngModelChange)="change('breakTime', $event * 60)"></ion-input>
   </ion-item>
   <ion-item [disabled]="disabled">
     <ion-range
-      [ngModel]="config.breakTime" (ngModelChange)="change('breakTime', $event)"
+      [ngModel]="config.breakTime / 60" (ngModelChange)="change('breakTime', $event * 60)"
       [min]="5"
       [max]="20"
     ></ion-range>
